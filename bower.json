@@ -1,0 +1,22 @@
+{
+  "name": "youtube",
+  "version": "0.0.1",
+  "authors": [
+    "Dhiraj Bodicherla <dhiraj.bodicherla@gmail.com>"
+  ],
+  "description": "Youtube sound quality experiment",
+  "main": "index.html",
+  "keywords": [
+    "youtube",
+    "sound"
+  ],
+  "license": "MIT",
+  "homepage": "https://youtube-experiment.herokuapp.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
