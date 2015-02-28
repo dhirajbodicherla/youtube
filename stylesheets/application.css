@@ -1,7 +1,27 @@
 /**
  * Need to use flexbox later
  */
-
+.youtube{
+  width: 600px;
+  margin: 0 auto;
+  padding: 2px;
+  text-align: center;
+}
 .video-container{
   display: none;
+}
+.search-input{
+  border: 1px solid gray;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  font-size: 30px;
+  color: gray;
+}
+img{
+  opacity: 0.8;
+}
+img:hover{
+  opacity: 1;
 }

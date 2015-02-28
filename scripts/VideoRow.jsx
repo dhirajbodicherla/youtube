@@ -12,8 +12,7 @@ var VideoRow = React.createClass({
     return (
       <div onClick={this.clickHandler}>
         <a href={"http://youtu.be/" + url.id}>
-          <img src={"http://i.ytimg.com/vi/" + url.id + "/default.jpg"}></img>
-          <h2>{url.title + " " + url.duration}</h2>
+          <img src={"http://i.ytimg.com/vi/" + url.id + "/hqdefault.jpg"}></img>
         </a>
       </div>
     );

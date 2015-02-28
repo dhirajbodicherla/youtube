@@ -18300,8 +18300,7 @@ var VideoRow = React.createClass({displayName: "VideoRow",
     return (
       React.createElement("div", {onClick: this.clickHandler}, 
         React.createElement("a", {href: "http://youtu.be/" + url.id}, 
-          React.createElement("img", {src: "http://i.ytimg.com/vi/" + url.id + "/default.jpg"}), 
-          React.createElement("h2", null, url.title + " " + url.duration)
+          React.createElement("img", {src: "http://i.ytimg.com/vi/" + url.id + "/hqdefault.jpg"})
         )
       )
     );
@@ -18333,8 +18332,14 @@ var App = React.createClass({displayName: "App",
     });
   },
 
-  search: function () {
-    var q = $(this.refs.youtubeUrlInput.getDOMNode()).val();
+  search: function (e) {
+    var q = $(this.refs.youtubeUrlInput.getDOMNode()).val().trim();
+    if(!q || e.which == 0) {
+      this.setState({
+        URLs: []
+      });
+      return;
+    }
     var _this = this;
     var url = "http://gdata.youtube.com/feeds/api/videos/?v=2&alt=jsonc&callback=?"
     url = url + '&max-results=50';
@@ -18349,8 +18354,6 @@ var App = React.createClass({displayName: "App",
   videoRowClickHandler: function(videoID){
     this.videoType = $(this.getDOMNode()).find('input[type="radio"]:checked').val();
     this.loadPlayers(videoID);
-    // this.startVideoHandler();
-    // this.videoTypeChangeHandler();
   },
 
   videoTypeChangeHandler: function(){
@@ -18411,15 +18414,21 @@ var App = React.createClass({displayName: "App",
       );
     }, this);
     return (
-      React.createElement("div", null, 
-        React.createElement("input", {type: "text", 
-              ref: "youtubeUrlInput", 
-              placeholder: "Copy Youtube URL", 
-              onKeyUp: $.debounce(450, this.search)}), 
-        React.createElement("input", {type: "radio", name: "video-switch", value: "1", defaultChecked: true}), " Mono", 
-        React.createElement("input", {type: "radio", name: "video-switch", value: "2"}), " Stereo", 
-        React.createElement("input", {type: "button", ref: "startVideo", value: "Start", onClick: this.startVideoHandler}), 
-        React.createElement("input", {type: "button", ref: "pauseVideo", value: "Pause", onClick: this.pauseVideoHandler}), 
+      React.createElement("div", {className: "youtube"}, 
+        React.createElement("div", null, 
+          React.createElement("input", {type: "text", 
+                ref: "youtubeUrlInput", 
+                className: "search-input", 
+                placeholder: "Start typing", 
+                onKeyUp: $.debounce(450, this.search), 
+                autoFocus: true})
+        ), 
+        React.createElement("div", {className: "controls"}, 
+          React.createElement("input", {type: "radio", name: "video-switch", value: "1", defaultChecked: true}), " Mono", 
+          React.createElement("input", {type: "radio", name: "video-switch", value: "2"}), " Stereo", 
+          React.createElement("input", {type: "button", ref: "startVideo", value: "Start", onClick: this.startVideoHandler}), 
+          React.createElement("input", {type: "button", ref: "pauseVideo", value: "Pause", onClick: this.pauseVideoHandler})
+        ), 
         React.createElement("div", {className: "video-urls"}, 
           urls
         ), 

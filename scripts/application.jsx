@@ -20,8 +20,14 @@ var App = React.createClass({
     });
   },
 
-  search: function () {
-    var q = $(this.refs.youtubeUrlInput.getDOMNode()).val();
+  search: function (e) {
+    var q = $(this.refs.youtubeUrlInput.getDOMNode()).val().trim();
+    if(!q || e.which == 0) {
+      this.setState({
+        URLs: []
+      });
+      return;
+    }
     var _this = this;
     var url = "http://gdata.youtube.com/feeds/api/videos/?v=2&alt=jsonc&callback=?"
     url = url + '&max-results=50';
@@ -36,8 +42,6 @@ var App = React.createClass({
   videoRowClickHandler: function(videoID){
     this.videoType = $(this.getDOMNode()).find('input[type="radio"]:checked').val();
     this.loadPlayers(videoID);
-    // this.startVideoHandler();
-    // this.videoTypeChangeHandler();
   },
 
   videoTypeChangeHandler: function(){
@@ -98,15 +102,21 @@ var App = React.createClass({
       );
     }, this);
     return (
-      <div>
-        <input type="text"
-              ref="youtubeUrlInput"
-              placeholder="Copy Youtube URL"
-              onKeyUp={$.debounce(450, this.search)} />
-        <input type="radio" name="video-switch" value="1" defaultChecked/> Mono
-        <input type="radio" name="video-switch" value="2" /> Stereo
-        <input type="button" ref="startVideo" value="Start" onClick={this.startVideoHandler}/>
-        <input type="button" ref="pauseVideo" value="Pause" onClick={this.pauseVideoHandler}/>
+      <div className="youtube">
+        <div>
+          <input type="text"
+                ref="youtubeUrlInput"
+                className="search-input"
+                placeholder="Start typing"
+                onKeyUp={$.debounce(450, this.search)}
+                autoFocus/>
+        </div>
+        <div className="controls">
+          <input type="radio" name="video-switch" value="1" defaultChecked/> Mono
+          <input type="radio" name="video-switch" value="2" /> Stereo
+          <input type="button" ref="startVideo" value="Start" onClick={this.startVideoHandler}/>
+          <input type="button" ref="pauseVideo" value="Pause" onClick={this.pauseVideoHandler}/>
+        </div>
         <div className="video-urls">
           {urls}
         </div>
